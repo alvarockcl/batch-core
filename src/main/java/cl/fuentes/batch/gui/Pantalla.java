@@ -11,7 +11,6 @@ public class Pantalla extends JFrame{
 
     private int ejecuciones;
     private boolean cerrado = false;
-
     private Consola consola;
 
     public Pantalla(int ejecuciones){
@@ -22,10 +21,7 @@ public class Pantalla extends JFrame{
     private void initComponents() {
 
         this.setTitle("Consola Procesos");
-        this.setSize(400, 200);
-        this.setLayout(null);
-        
-        //setUndecorated(true); // remueve la barra de titulos
+        setUndecorated(true); // remueve la barra de titulos
         setAlwaysOnTop(false); // esta interface esta siempre sobre
         setResizable(false); // se deshabilita cambiar tamaño 
 
@@ -47,12 +43,10 @@ public class Pantalla extends JFrame{
             public void windowClosed(WindowEvent e) {
                 setCerrado(true);
             }
-        
             public void windowClosing(WindowEvent e) {
                 setCerrado(true);
             }
         });
-
     }
 
     public boolean isCerrado() {
@@ -72,7 +66,7 @@ public class Pantalla extends JFrame{
     }
 
     public void actualizaPantalla(){
-        consola.actualizaConsola();
+        consola.actualizaConsola(ejecuciones);
     }
 
 }
