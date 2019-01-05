@@ -1,6 +1,7 @@
 package cl.fuentes.batch.core;
 
 import cl.fuentes.batch.render.*;
+import cl.fuentes.batch.gui.*;
 
 public class Proceso implements Runnable
 {
@@ -10,19 +11,23 @@ public class Proceso implements Runnable
     private int ejecuciones = 1;
 
     Actividad actividad = null;
+    Pantalla pantalla = null;
 
     public Proceso(){
         actividad = new Actividad();
-        start();
+        pantalla = new Pantalla(ejecuciones);
+        pantalla.setVisible(true);
+        this.start();
     }
 
     @Override
     public void run() {
         while(activo){
-            renderProceso();
+            this.renderProceso();
             ejecuciones++;
-            if(ejecuciones == 1000000000){
-                stop();
+            if(pantalla.isCerrado()){
+                this.stop();
+                System.exit(0);
             }
         }
     }
@@ -39,11 +44,11 @@ public class Proceso implements Runnable
         activo = false;
     }
 
-    public static void main(String[] args){
-        new Proceso().start();
+    public void renderProceso(){
+        pantalla.setEjecuciones(ejecuciones);
     }
 
-    public void renderProceso(){
-        actividad.mensajeConsola(ejecuciones);
+    public static void main(String[] args){
+        new Proceso().start();
     }
 }
