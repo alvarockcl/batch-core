@@ -1,5 +1,6 @@
 package cl.fuentes.batch.core;
 
+import cl.fuentes.batch.render.*;
 
 public class Proceso implements Runnable
 {
@@ -8,7 +9,10 @@ public class Proceso implements Runnable
     private boolean activo = false;
     private int ejecuciones = 1;
 
+    Actividad actividad = null;
+
     public Proceso(){
+        actividad = new Actividad();
         start();
     }
 
@@ -40,6 +44,6 @@ public class Proceso implements Runnable
     }
 
     public void renderProceso(){
-        System.out.println("Ejecución : " + ejecuciones);
+        actividad.mensajeConsola(ejecuciones);
     }
 }
