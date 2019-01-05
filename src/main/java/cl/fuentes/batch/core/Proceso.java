@@ -46,6 +46,7 @@ public class Proceso implements Runnable
 
     public void renderProceso(){
         pantalla.setEjecuciones(ejecuciones);
+        pantalla.actualizaPantalla();
     }
 
     public static void main(String[] args){

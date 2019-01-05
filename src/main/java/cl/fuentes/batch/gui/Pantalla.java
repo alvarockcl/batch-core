@@ -1,16 +1,18 @@
 package cl.fuentes.batch.gui;
 
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 public class Pantalla extends JFrame{
 
     private int ejecuciones;
-    private JTextField texto;
     private boolean cerrado = false;
+
+    private Consola consola;
 
     public Pantalla(int ejecuciones){
         initComponents();        
@@ -23,14 +25,24 @@ public class Pantalla extends JFrame{
         this.setSize(400, 200);
         this.setLayout(null);
         
-        texto = new JTextField();
-        texto.setLocation(20, 20);
-        texto.setSize(200, 20);
-        texto.setText("" + ejecuciones);
-        texto.setVisible(true);
-        
-        this.add(texto);
+        //setUndecorated(true); // remueve la barra de titulos
+        setAlwaysOnTop(false); // esta interface esta siempre sobre
+        setResizable(false); // se deshabilita cambiar tamaño 
 
+        Toolkit tk = Toolkit.getDefaultToolkit(); // hará mas comrpensible
+        int xsize = (int) tk.getScreenSize().getWidth();
+        int ysize = (int) tk.getScreenSize().getHeight();
+        setSize(xsize, ysize);
+
+        ImageIcon img = new ImageIcon("resources/icon.png");
+        setIconImage(img.getImage());
+
+        consola = new Consola();
+        consola.setMaxX(xsize);
+        consola.setMaxY(ysize);
+        
+        this.add(consola);  
+        
         this.addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
                 setCerrado(true);
@@ -57,7 +69,10 @@ public class Pantalla extends JFrame{
 
     public void setEjecuciones(int ejecuciones) {
         this.ejecuciones = ejecuciones;
-        texto.setText(String.valueOf(ejecuciones));
+    }
+
+    public void actualizaPantalla(){
+        consola.actualizaConsola();
     }
 
 }
