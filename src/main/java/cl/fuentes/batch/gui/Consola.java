@@ -18,6 +18,7 @@ public class Consola extends JPanel {
     private Image imgConsola = null;
     
     private int ejecuciones = 0;
+    private int nframe = 0;
     
     BufferedImage img = null;
 
@@ -29,10 +30,11 @@ public class Consola extends JPanel {
         }        
     }
 
-    public void actualizaConsola(int ejecuciones) {
+    public void actualizaConsola(int ejecuciones, int nframe) {
         renderConsola();
         pintaConsola();
         this.ejecuciones = ejecuciones;
+        this.nframe = nframe;
     }
 
     public void renderConsola(){
@@ -50,6 +52,7 @@ public class Consola extends JPanel {
             graConsola.setFont(new Font("Arial", Font.BOLD, 19));
             graConsola.setColor(Color.green);
             graConsola.drawString("Resolución : " + maxX + " X " + maxY + " " + ejecuciones, 20, 60);                            
+            graConsola.drawString("Frame / Segundo : " + nframe , 20, 90);                            
         }
     }
 

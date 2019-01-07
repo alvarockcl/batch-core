@@ -10,12 +10,15 @@ import javax.swing.JFrame;
 public class Pantalla extends JFrame{
 
     private int ejecuciones;
+    private int nframe;
     private boolean cerrado = false;
     private Consola consola;
 
-    public Pantalla(int ejecuciones){
+
+    public Pantalla(int ejecuciones, int nframe){
         initComponents();        
         this.ejecuciones = ejecuciones;
+        this.nframe = nframe;
     }
 
     private void initComponents() {
@@ -65,8 +68,15 @@ public class Pantalla extends JFrame{
         this.ejecuciones = ejecuciones;
     }
 
+    public int getNframe() {
+        return nframe;
+    }
+
+    public void setNframe(int nframe) {
+        this.nframe = nframe;
+    }
     public void actualizaPantalla(){
-        consola.actualizaConsola(ejecuciones);
+        consola.actualizaConsola(ejecuciones, nframe);
     }
 
 }
