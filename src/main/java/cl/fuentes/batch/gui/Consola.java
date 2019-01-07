@@ -50,7 +50,7 @@ public class Consola extends JPanel {
             graConsola.drawImage(img,0,0,maxX,maxX, this);
 
             graConsola.setFont(new Font("Arial", Font.BOLD, 19));
-            graConsola.setColor(Color.green);
+            graConsola.setColor(Color.white);
             graConsola.drawString("Resolución : " + maxX + " X " + maxY + " " + ejecuciones, 20, 60);                            
             graConsola.drawString("Frame / Segundo : " + nframe , 20, 90);                            
         }

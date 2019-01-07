@@ -35,6 +35,7 @@ public class Proceso implements Runnable
     @Override
     public void run() {
         while(activo){
+           
             tinicio = System.nanoTime();
 
             this.renderProceso();
@@ -45,21 +46,9 @@ public class Proceso implements Runnable
             }
 
             ttermino = System.nanoTime();
-            tres = (long)(ttermino-tinicio);
-            tdelay = 33333333 - tres; // a 30 fps
-            try { 
-                TimeUnit.NANOSECONDS.sleep(tdelay);
-            } catch (InterruptedException ex) {
-            }
-            if(contador_tiempo <= 50){
-                tdif = (int)(1/((ttermino - tinicio + tdelay)/1000000000));
-                fsuma = fsuma + tdif;
-                contador_tiempo++;
-            }else{
-                nframe = (int)(fsuma/50);
-                fsuma = 0;
-                contador_tiempo = 0;
-            }
+
+            this.ajusteFrame(30);
+
         }
     }
 
@@ -81,7 +70,33 @@ public class Proceso implements Runnable
         pantalla.actualizaPantalla();
     }
 
+    public void ajusteFrame(int fps) {
+            
+        tres = (long)(ttermino-tinicio);
+        double frac = (1 / (double) fps ) * 1000000000;
+        tdelay = (long) (frac - tres); 
+        try { 
+            TimeUnit.NANOSECONDS.sleep(tdelay); 
+        } catch (InterruptedException ex) {
+        }
+
+        // calcula el promedio
+        // estabiliza al promedio el nfarme (50 muestras)
+        if(contador_tiempo <= 50){
+            tdif = (int)(1/((ttermino - tinicio + tdelay)/1000000000));
+            fsuma = fsuma + tdif;
+            contador_tiempo++;
+        }else{
+            nframe = (int)(fsuma/50);
+            fsuma = 0;
+            contador_tiempo = 0;
+        }
+
+    }
+
     public static void main(String[] args){
         new Proceso().start();
     }
+
+    
 }
