@@ -13,14 +13,15 @@ public class Proceso implements Runnable
     private boolean activo = false;
     private int ejecuciones = 1;
 
-    private int contador_tiempo=0;
+    private int contador_tiempo=1;
     private int fsuma=0;
     private int nframe = 0;
-    private float tinicio;
-    private float ttermino;
+    private double tinicio;
+    private double ttermino;
     private long tres;
     private long tdelay;
     private int tdif =0;
+    private double r1, r2, r3, r4, r5;
 
     Actividad actividad = null;
     Pantalla pantalla = null;
@@ -47,7 +48,7 @@ public class Proceso implements Runnable
 
             ttermino = System.nanoTime();
 
-            this.ajusteFrame(30);
+            this.ajusteFrame(true, 60);
 
         }
     }
@@ -70,27 +71,40 @@ public class Proceso implements Runnable
         pantalla.actualizaPantalla();
     }
 
-    public void ajusteFrame(int fps) {
-            
-        tres = (long)(ttermino-tinicio);
-        double frac = (1 / (double) fps ) * 1000000000;
-        tdelay = (long) (frac - tres); 
-        try { 
-            TimeUnit.NANOSECONDS.sleep(tdelay); 
-        } catch (InterruptedException ex) {
-        }
+    public void ajusteFrame(boolean frameControl, int fps) {
+    
 
-        // calcula el promedio
-        // estabiliza al promedio el nfarme (50 muestras)
-        if(contador_tiempo <= 50){
-            tdif = (int)(1/((ttermino - tinicio + tdelay)/1000000000));
-            fsuma = fsuma + tdif;
-            contador_tiempo++;
-        }else{
-            nframe = (int)(fsuma/50);
-            fsuma = 0;
-            contador_tiempo = 0;
-        }
+          if(frameControl){  
+                tres = (long)(ttermino-tinicio);
+                double frac = (1 / (double) fps ) * 1000000000;
+                
+                tdelay = (long) (frac - tres); 
+                
+                try { 
+                    TimeUnit.NANOSECONDS.sleep(tdelay); 
+                } catch (InterruptedException ex) {
+                }
+            }
+
+            if(!frameControl){
+                tdelay = 0;
+            }
+            
+            if(contador_tiempo <= 50){
+                r1 = ttermino - tinicio + tdelay;
+                r2 = r1 / 1000000000;
+                r3 =  (1 / r2);
+                fsuma =  fsuma + (int) r3;
+                contador_tiempo++;
+            }else{
+                nframe = (int)(fsuma/50);
+                r1 = 0;
+                r2 = 0;
+                r3 = 0;
+                fsuma = 0;
+                contador_tiempo = 1;
+            }
+            
 
     }
 
