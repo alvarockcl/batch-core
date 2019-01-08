@@ -1,0 +1,10 @@
+Análisis de Imagenes
+http://openimaj.org/
+https://github.com/openimaj
+
+Image Tools
+https://github.com/wizzardo/tools/tree/master/modules/tools-image/src/main/java/com/wizzardo/tools/image
+
+
+Apache Commons Image
+https://commons.apache.org/proper/commons-imaging/

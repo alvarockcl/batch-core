@@ -48,7 +48,7 @@ public class Proceso implements Runnable
 
             ttermino = System.nanoTime();
 
-            this.ajusteFrame(true, 60);
+            this.ajusteFrame(true, 20);
 
         }
     }
